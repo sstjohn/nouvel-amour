@@ -61,20 +61,23 @@ function mergeNew(clean, newLove) {
 
 chrome.runtime.onMessage.addListener(
 		function(request, sender, sendResponse) {
-			chrome.storage.local.get(request.user, function(data) {
-				var old = data[request.user];
-				if (old == undefined)
-					old = {};
-				var newLove = findNew(old, request.love);
-				var response = {};
-				response["type"] = "love-delta";
-				response["love"] = newLove;
-				sendResponse(response);
-				var clean = loveClean(old, request.love);
-				var updated = mergeNew(clean, newLove);
-				var toStore = {};
-				toStore[request.user] = updated;
-				chrome.storage.local.set(toStore);
-			});
-			return true;
+			if (request["type"] == "love-diff") {
+				chrome.storage.local.get(request.user, function(data) {
+					var old = data[request.user];
+					if (old == undefined)
+						old = {};
+					var newLove = findNew(old, request.love);
+					var response = {};
+					response["type"] = "love-delta";
+					response["love"] = newLove;
+					sendResponse(response);
+					var clean = loveClean(old, request.love);
+					var updated = mergeNew(clean, newLove);
+					var toStore = {};
+					toStore[request.user] = updated;
+					chrome.storage.local.set(toStore);
+				});
+				return true;
+			}
+			return false;
 		});

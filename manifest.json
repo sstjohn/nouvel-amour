@@ -2,19 +2,20 @@
 	"name": "nouvel amour",
 	"manifest_version": 2,
 	"description": "GrinnellPlans NewLove mk 2",
-	"version": "1.99.1",
+	"version": "2.0.0",
 	"permissions": [
 		"http://*.grinnellplans.com/",
 		"https://*.grinnellplans.com/",
-		"storage",
-		"notifications"],
+		"storage"],
 	"content_scripts": [{
-		"matches": ["*://*.grinnellplans.com/search.php?mysearch=*&planlove=1"],
-		"js": ["jquery.min.js", "content_script.js"]
+		"matches": ["*://*.grinnellplans.com/search*"],
+		"js": ["jquery.min.js", "content_script.js"],
+		"css": ["content_script.css"],
+		"run_at": "document_start",
+		"include_glob": "*planlove=1"
 	}],
 	"background": {
 		"scripts": ["upgrade.js", "background.js"]
 	},
-	"options_page": "options.html",
-	"web_accessible_resources": ["love-notify.png", "alert.png"]
+	"options_page": "options.html"
 }
