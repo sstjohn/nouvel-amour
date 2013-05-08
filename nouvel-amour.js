@@ -1,8 +1,3 @@
-function getAuthor(node) {
-var links = node.getElementsByTagName('a');
-return links[0].textContent;
-}
-
 function getCurrentUsername() {
 	var urly = window.location.href;
 	var startIndex = urly.indexOf("mysearch=") + 9;
@@ -10,26 +5,21 @@ function getCurrentUsername() {
 	return urly.substring(startIndex, endIndex);
 }
 
-var loves = document.evaluate(
-        '//ul[@id="search_results"]/li//ul/li',
-        document,
-        null,
-        XPathResult.UNORDERED_NODE_ITERATOR_TYPE,
-        null);
+
+var loveList = $("#search_results > li");
 
 var currentLove = {};
 
-var thisLoveNode;
-while ( thisLoveNode = loves.iterateNext() ) {
-    var author = getAuthor(thisLoveNode.parentNode.parentNode);
+loveList.each( function(index, tmp) {
+	var author = $(this).find("a.planlove").text();
 
-    thisLoveText = thisLoveNode.textContent;
+	currentLove[author] = [];
 
-    if (!currentLove[author])
-	    currentLove[author] = [];
-
-    currentLove[author].push(thisLoveText);
-}
+	$(this).find("ul > li").each(function(index, tmp) {
+		var txt = $(this).children("span").text();
+    		currentLove[author].push(txt);
+	});
+});
 
 var message = {};
 message["user"] = getCurrentUsername();
@@ -37,7 +27,7 @@ message["love"] = currentLove;
 message["type"] = "love-diff";
 
 function cleanDisplay(newLove) {
-        $("#search_results > li").each(
+        loveList.each(
 		function(index, tmp) {
 			var author = $(this).find("a.planlove").text();
 
