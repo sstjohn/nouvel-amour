@@ -14,5 +14,6 @@
 	"background": {
 		"scripts": ["nouvel-amour-bg.js"]
 	},
-	"options_page": "na-options.html"
+	"options_page": "na-options.html",
+	"web_accessible_resources": ["love-notify.png"]
 }
