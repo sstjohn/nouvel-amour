@@ -61,10 +61,10 @@ function expandomatic(author) {
 }
 
 function display_cleaner(new_love) {
-	var state = 
+	return
 		{author_set: function(a) {
 			this.author = a;
-			this.collapsed = false;
+			this.collapsable = false;
 					 },
 		 love_process: function(l) {
 			var txt = $(l).children("span").text();
@@ -78,23 +78,28 @@ function display_cleaner(new_love) {
 			}
 		
 			if (!is_new) {
-				if (!this.collapsed) {
+				if (!this.collapsable) {
 					var expander = $("<button>+</button>");
 					expander.attr("class", "submitinput");
 					expander.attr("id", "expand_" + this.author);
-					expander.css("float", "right");
-					expander.css("margin-left", "10px");
-					var par = $(l).parent().parent();
-					par.css("display", "inline-block");
-					par.children("span").after(expander);
+					expander.css("float", "none");
+					expander.css("margin-left", "0.5em");
 					expander.click(expandomatic(this.author));
-					this.collapsed = true;
+					var par = $(l).parent().parent();
+					var detached = par.children("a").detach();
+					var new_div = $("<div/>");
+					new_div.append(detached);
+					detached = par.children("span").detach();
+					detached.css("margin-left", "0.4em");
+					new_div.append(detached);
+					new_div.append(expander);
+					par.children("ul").before(new_div);
+					this.collapsable = true;
 				}
 				$(l).hide();
 			}
 					 }
 		};
-	return state;
 }
 
 var bgResponse;
