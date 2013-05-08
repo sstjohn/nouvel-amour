@@ -6,14 +6,15 @@
 	"permissions": [
 		"http://*.grinnellplans.com/",
 		"https://*.grinnellplans.com/",
-		"storage"],
+		"storage",
+		"notifications"],
 	"content_scripts": [{
 		"matches": ["*://*.grinnellplans.com/search.php?mysearch=*&planlove=1"],
 		"js": ["jquery.min.js", "nouvel-amour.js"]
 	}],
 	"background": {
-		"scripts": ["nouvel-amour-bg.js"]
+		"scripts": ["na-upgrade.js", "nouvel-amour-bg.js"]
 	},
 	"options_page": "na-options.html",
-	"web_accessible_resources": ["love-notify.png"]
+	"web_accessible_resources": ["love-notify.png", "alert.png"]
 }
