@@ -61,7 +61,7 @@ function expandomatic(author) {
 }
 
 function display_cleaner(new_love) {
-	return
+	var state = 
 		{author_set: function(a) {
 			this.author = a;
 			this.collapsable = false;
@@ -100,6 +100,7 @@ function display_cleaner(new_love) {
 			}
 					 }
 		};
+	return state;
 }
 
 var bgResponse;
