@@ -31,7 +31,7 @@ function love_collector() {
 			var txt = $(l).children("span").text();
     			this.current_love[this.author].push(txt);
 				   },
-		 current_love: []
+		 current_love: {}
 		};
 	return state;
 }

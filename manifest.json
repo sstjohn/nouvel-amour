@@ -2,7 +2,7 @@
 	"name": "nouvel amour",
 	"manifest_version": 2,
 	"description": "GrinnellPlans NewLove mk 2",
-	"version": "1.9.1",
+	"version": "1.9.3",
 	"permissions": [
 		"http://*.grinnellplans.com/",
 		"https://*.grinnellplans.com/",
@@ -12,7 +12,7 @@
 		"js": ["jquery.min.js", "nouvel-amour.js"]
 	}],
 	"background": {
-		"scripts": ["md5.js", "nouvel-amour-bg.js"]
+		"scripts": ["nouvel-amour-bg.js"]
 	},
-	"web_accessible_resources": ["nouvel-amour.css"]
+	"options_page": "na-options.html"
 }

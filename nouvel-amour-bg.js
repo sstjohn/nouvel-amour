@@ -9,12 +9,9 @@ function findNew(old, current) {
 			newLove[author] = [];
 			for (item in current[author]) {
 				var is_old = false;
-				var old_txt = old[author][tmp];
-				if (old_txt[0] != '\x01')
-					old_txt = "\x01" + md5(old_txt);
 
 				for (tmp in old[author]) {
-					if (old[author][tmp] == "\x01" + md5(current[author][item]))
+					if (old[author][tmp] == current[author][item])
 						is_old = true;
 				}
 
@@ -37,21 +34,12 @@ function loveClean(old, current) {
 		
 		for (item in old[author]) {
 			var is_gone = true;
-			var old_txt = old[author][item];
-			if (old_txt[0] != '\x01')
-				old_txt = "\x01" + md5(old_txt);
-
 			for (tmp in current[author]) {
-				var cur_txt = current[author][tmp];
-			
-				if (cur_txt[0] != '\x01')
-					cur_txt = "\x01" + md5(cur_txt);
-				
-				if (cur_txt == old_txt)
+				if (current[author][tmp] == old[author][item])
 					is_gone = false;
 			}
 			if (!is_gone)
-				cleanLove[author].push(cur_txt);
+				cleanLove[author].push(current[author][item]);
 		}
 	}
 
@@ -64,7 +52,7 @@ function mergeNew(clean, newLove) {
 		for (item in newLove[author]) {
 			if (!(author in clean))
 				clean[author] = [];
-			clean[author].push("\x01" + md5(newLove[author][item]));
+			clean[author].push(newLove[author][item]);
 		}
 	}
 
@@ -73,7 +61,7 @@ function mergeNew(clean, newLove) {
 
 chrome.runtime.onMessage.addListener(
 		function(request, sender, sendResponse) {
-			chrome.storage.sync.get(request.user, function(data) {
+			chrome.storage.local.get(request.user, function(data) {
 				var old = data[request.user];
 				if (old == undefined)
 					old = {};
@@ -86,7 +74,7 @@ chrome.runtime.onMessage.addListener(
 				var updated = mergeNew(clean, newLove);
 				var toStore = {};
 				toStore[request.user] = updated;
-				chrome.storage.sync.set(toStore);
+				chrome.storage.local.set(toStore);
 			});
 			return true;
 		});
