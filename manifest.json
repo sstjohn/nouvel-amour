@@ -7,12 +7,12 @@
 		"http://*.grinnellplans.com/",
 		"https://*.grinnellplans.com/",
 		"storage"],
-	"content_scripts": [
-	{
+	"content_scripts": [{
 		"matches": ["*://*.grinnellplans.com/search.php?mysearch=*&planlove=1"],
 		"js": ["jquery.min.js", "nouvel-amour.js"]
 	}],
 	"background": {
-		"scripts": ["nouvel-amour-bg.js"]
-	}
+		"scripts": ["md5.js", "nouvel-amour-bg.js"]
+	},
+	"web_accessible_resources": ["nouvel-amour.css"]
 }

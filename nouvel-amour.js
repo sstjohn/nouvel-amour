@@ -1,3 +1,4 @@
+$(document).ready(function() {
 function getCurrentUsername() {
 	var urly = window.location.href;
 	var startIndex = urly.indexOf("mysearch=") + 9;
@@ -112,4 +113,4 @@ chrome.runtime.sendMessage(message, function(response) {
 	}
 });
 
-
+});
