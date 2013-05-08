@@ -37,32 +37,26 @@ message["love"] = currentLove;
 message["type"] = "love-diff";
 
 function cleanDisplay(newLove) {
-	var loves = document.evaluate(
-        	'//ul[@id="search_results"]/li//ul/li',
-        	document,
-        	null,
-        	XPathResult.UNORDERED_NODE_ITERATOR_TYPE,
-        	null);
+        $("#search_results > li").each(
+		function(index, tmp) {
+			var author = $(this).find("a.planlove").text();
 
-	var tmp;
-	var toRemove = [];
-	while (tmp = loves.iterateNext()) {
-		var author = getAuthor(tmp.parentNode.parentNode);
-		var txt = tmp.textContent;
+			$(this).find("ul > li").each(
+				function (index, tmp) {
+					var txt = $(this).children("span").text();
 
-		var is_new = false;
-		if (author in newLove) {
-			for (item in newLove[author]) {
-				if (txt == newLove[author][item])
-					is_new = true;
-			}
-		}
+					var is_new = false;
+					if (author in newLove) {
+						for (item in newLove[author]) {
+							if (txt == newLove[author][item])
+								is_new = true;
+						}
+					}
 		
-		if (!is_new)
-			toRemove.push(tmp);
-	}
-
-	toRemove.forEach(function(n) { n.parentNode.removeChild(n); });
+					if (!is_new)
+						$(this).hide();
+				});
+		});
 }
 
 var bgResponse;

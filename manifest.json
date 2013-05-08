@@ -10,7 +10,7 @@
 	"content_scripts": [
 	{
 		"matches": ["*://*.grinnellplans.com/search.php?mysearch=*&planlove=1"],
-		"js": ["nouvel-amour.js"]
+		"js": ["jquery.min.js", "nouvel-amour.js"]
 	}],
 	"background": {
 		"scripts": ["nouvel-amour-bg.js"]
