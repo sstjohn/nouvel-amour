@@ -2,7 +2,7 @@
 	"name": "nouvel amour",
 	"manifest_version": 2,
 	"description": "GrinnellPlans NewLove mk 2",
-	"version": "1.9.3",
+	"version": "1.9.4",
 	"permissions": [
 		"http://*.grinnellplans.com/",
 		"https://*.grinnellplans.com/",
