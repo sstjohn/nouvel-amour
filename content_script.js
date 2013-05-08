@@ -67,15 +67,18 @@ function display_cleaner(new_love) {
 		{author_set: function(a, e) {
 			this.author = a;
 			this.button_plus = false;
+			
+			var new_div = $("<div/>");
 
 			var expander = $("<button>!</button>");
 			expander.attr("class", "submitinput");
 			expander.attr("id", "expand_" + this.author);
 			expander.css("float", "none");
-			expander.css("margin-left", "0.5em");
+			expander.css("margin-right", "0.5em");
+			expander.css("font-family", "monospace");
 			expander.click(expandomatic(this.author));
+			new_div.append(expander);
 			
-			var new_div = $("<div/>");
 			
 			var detached = $(e).find("div > a.planlove").detach();
 			new_div.append(detached);
@@ -83,8 +86,6 @@ function display_cleaner(new_love) {
 			detached = $(e).find("div > span").detach();
 			detached.css("margin-left", "0.4em");
 			new_div.append(detached);
-
-			new_div.append(expander);
 
 			$(e).find("div > ul").before(new_div);
 					 },
