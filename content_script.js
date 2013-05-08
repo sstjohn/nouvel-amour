@@ -48,7 +48,7 @@ function expandomatic(author) {
 					var btn = $("#expand_" + a);
 					if (btn.text() == "+")
 						btn.text("-");
-					else
+					else if (btn.text() == "-")
 						btn.text("+");
 				}
 				else
@@ -66,8 +66,9 @@ function display_cleaner(new_love) {
 	var state = 
 		{author_set: function(a, e) {
 			this.author = a;
+			this.button_plus = false;
 
-			var expander = $("<button>+</button>");
+			var expander = $("<button>!</button>");
 			expander.attr("class", "submitinput");
 			expander.attr("id", "expand_" + this.author);
 			expander.css("float", "none");
@@ -100,6 +101,10 @@ function display_cleaner(new_love) {
 		
 			if (!$(l).data("is_new")) {
 				$(l).hide();
+				if (!this.button_false) {
+					$("#expand_" + this.author).text("+");
+					this.button_plus = true;
+				}
 			}
 					 }
 		};
