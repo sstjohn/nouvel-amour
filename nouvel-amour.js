@@ -5,7 +5,6 @@ function getCurrentUsername() {
 	return urly.substring(startIndex, endIndex);
 }
 
-
 var love_list = $("#search_results > li");
 
 function each_love(state) {
@@ -13,7 +12,6 @@ function each_love(state) {
 		var author = $(this).find("a.planlove").text();
 
 		state.author_set(author);
-
 
 		$(this).find("ul > li").each(function(index, tmp) {
 			state.love_process(this);
@@ -44,13 +42,19 @@ message["type"] = "love-diff";
 
 function expandomatic(author) {
 	var state = 	{author_set: function(a) {
-				if (author == a)
+				if (author == a) {
 					this.love_process = this.this_is_it;
+					var btn = $("#expand_" + a);
+					if (btn.text() == "+")
+						btn.text("-");
+					else
+						btn.text("+");
+				}
 				else
 					this.love_process = this.this_is_not_it;
 						   },
 			this_is_it: function(l) {
-				$(l).toggle();
+				$(l).slideToggle();
 				                },
 			this_is_not_it: function(l) {}};
 	return function() { each_love(state); };
@@ -77,6 +81,7 @@ function display_cleaner(new_love) {
 				if (!this.collapsed) {
 					var expander = $("<button>+</button>");
 					expander.attr("class", "submitinput");
+					expander.attr("id", "expand_" + this.author);
 					expander.css("float", "right");
 					expander.css("margin-left", "10px");
 					var par = $(l).parent().parent();
