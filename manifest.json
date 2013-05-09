@@ -1,8 +1,8 @@
 {
 	"name": "nouvel amour",
 	"manifest_version": 2,
-	"description": "GrinnellPlans NewLove mk 2",
-	"version": "2.0.0",
+	"description": "a new New Love for Chrome",
+	"version": "2.1.0",
 	"permissions": [
 		"http://*.grinnellplans.com/",
 		"https://*.grinnellplans.com/",

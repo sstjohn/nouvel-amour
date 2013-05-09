@@ -110,6 +110,27 @@ $(document).ready(function() {
 						$("#expand_" + this.author).text("+");
 						this.button_plus = true;
 					}
+				} else {
+					var new_div = $("<div/>");
+					new_div.css("display", "table");
+
+					var detached = $(l).children("span").detach();
+
+					var seen = $("<button>&#x2713;</button>");
+					seen.attr("class","submitinput");
+					seen.css("float", "none");
+					seen.css("margin-right", "0.5em");
+					seen.css("font-family", "monospace");
+					seen.css("width", $("#expand_" + this.author).css('width'));
+					seen.css("text-align", "center");
+					seen = $("<div/>").append(seen);
+					seen.css("display", "table-cell");
+					seen.css("vertical-align", "middle");
+					
+
+					new_div.append(seen);
+					new_div.append(detached);
+					$(l).append(new_div);
 				}
 						 }
 			};
