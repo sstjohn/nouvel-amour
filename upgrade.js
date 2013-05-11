@@ -1,35 +1,30 @@
-function majorUpgrade(from) {
-}
-
-function minorUpgrade(from) {
-}
-
-function revUpgrade(from) {
+function upgrade(omaj, omin, orev) {
+	if (omaj < 3) {
+		chrome.storage.local.get(null, function(data) {
+			for (user in data) {
+				for (author in data[user]) {
+					var new_author_data = {};
+					for (item in data[user][author]) {
+						var txt = data[user][author][item];
+						var hash = md5(txt);
+						new_author_data[hash] = "";
+					}
+					data[user][author] = new_author_data;
+				}	
+			}
+			chrome.storage.local.set(data);
+		});
+	}
 }
 
 chrome.runtime.onInstalled.addListener(function(details) {
 	if (details.reason != "upgrade")
 		return;
 
-	var curVersion = chrome.app.getDetails().version.split(".");
-	var cmaj = curVersion[0];
-	var cmin = curVersion[1];
-	var crev = curVersion[2];
-	
 	var oldVersion = details.previousVersion.split(".");
 	var omaj = oldVersion[0];
 	var omin = oldVersion[1];
 	var orev = oldVersion[2];
-	
-	if (omaj < cmaj) {
-		majorUpgrade(omaj);
-		omin = 0;
-		orev = 0;
-	}
-	if (omin < cmin) {
-		minorUpgrade(omin);
-		orev = 0;
-	}
-	if (orev < crev)
-		revUpgrade(orev);
+
+	upgrade(omaj, omin, orev);	
 });
