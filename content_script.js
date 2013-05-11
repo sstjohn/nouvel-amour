@@ -134,7 +134,10 @@ $(document).ready(function() {
 				}  else {
 					seen.children("button").click(function() {
 						$(l).data("is_new", false);
-						seen.toggle("slide");
+						seen.toggle({"effect": "slide", "complete": function() {
+							seen.children('button').css('visibility', 'hidden');
+							seen.show();
+						}});
 						if (author_node.text() == "!") {
 							author_node.text("+");
 							author_node.css("opacity", "1");
