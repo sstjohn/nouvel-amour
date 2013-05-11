@@ -2,11 +2,14 @@
 	"name": "nouvel amour",
 	"manifest_version": 2,
 	"description": "a new New Love for Chrome",
-	"version": "3.0.5",
+	"version": "3.1.0",
 	"permissions": [
 		"http://*.grinnellplans.com/",
 		"https://*.grinnellplans.com/",
 		"storage"],
+	"optional_permissions": [
+		"management",
+		"notifications"],
 	"content_scripts": [{
 		"matches": ["*://*.grinnellplans.com/search*"],
 		"js": ["jquery.min.js", "jquery-ui.min.js", "content_script.js"],
@@ -15,7 +18,7 @@
 		"include_glob": "*planlove=1"
 	}],
 	"background": {
-		"scripts": ["md5.js", "upgrade.js", "background.js"]
+		"scripts": ["md5.js", "upgrade.js", "jquery.min.js", "notification.js", "background.js"]
 	},
 	"options_page": "options.html",
 	"content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
