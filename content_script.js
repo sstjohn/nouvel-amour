@@ -111,8 +111,20 @@ $(document).ready(function() {
 				new_div.append(detached);
 				$(l).append(new_div);
 				
-				var author_node = $("#expand_" + this.author);
+				var seen = $("<button>!</button>");
+				seen.attr("class","submitinput");
+				seen.css("margin-right", "0.5em");
+				seen.css("font-family", "monospace");
+				seen.css("text-align", "center");
+				seen = $("<div/>").append(seen);
+				seen.css("display", "table-cell");
+				seen.css("vertical-align", "middle");
+				seen.css("float", "left");
+				
+				var author_name = this.author;
+				var author_node = $("#expand_" + author_name);
 				if (!$(l).data("is_new")) {
+					seen.children("button").css("visibility", "hidden");
 					$(l).hide();
 
 					if (author_node.text() == "!") {
@@ -120,19 +132,7 @@ $(document).ready(function() {
 						author_node.css("opacity", "1");
 					}
 				}  else {
-
-					var seen = $("<button>!</button>");
-					seen.attr("class","submitinput");
-					seen.css("margin-right", "0.5em");
-					seen.css("font-family", "monospace");
-					seen.css("text-align", "center");
-					seen = $("<div/>").append(seen);
-					seen.css("display", "table-cell");
-					seen.css("vertical-align", "middle");
-					seen.css("float", "left");
-
-					var author_name = this.author;
-					seen.click(function() {
+					seen.children("button").click(function() {
 						$(l).data("is_new", false);
 						seen.toggle("slide");
 						if (author_node.text() == "!") {
@@ -149,9 +149,8 @@ $(document).ready(function() {
 						message["love"] = detached.text();
 						chrome.runtime.sendMessage(message);
 					});
-
-					detached.before(seen);
 				}
+				detached.before(seen);
 						 }
 			};
 		return state;

@@ -2,7 +2,7 @@
 	"name": "nouvel amour",
 	"manifest_version": 2,
 	"description": "a new New Love for Chrome",
-	"version": "3.0.3",
+	"version": "3.0.4",
 	"permissions": [
 		"http://*.grinnellplans.com/",
 		"https://*.grinnellplans.com/",
