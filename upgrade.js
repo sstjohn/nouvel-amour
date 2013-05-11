@@ -18,7 +18,7 @@ function upgrade(omaj, omin, orev) {
 }
 
 chrome.runtime.onInstalled.addListener(function(details) {
-	if (details.reason != "upgrade")
+	if (details.reason != "update")
 		return;
 
 	var oldVersion = details.previousVersion.split(".");
