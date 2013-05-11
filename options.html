@@ -9,6 +9,27 @@
 				<option id="false">False</option>
 			</select>
 		</div>
+		<div>
+			Use SSL:
+			<input type="checkbox" id="use_ssl" />
+		</div>
+		<div>
+			Desktop notifications:
+			<input type="checkbox" id="notify" name="notify" />
+		</div>
+		<div id="notification_settings" style="display: none;">
+			<div>
+				Polling interval:
+				<input type="text" id="poll_interval" />
+			</div>
+			<div>
+				Autoread level
+				<input type="checkbox" id="af1">1</input>
+				<input type="checkbox" id="af2">2</input>
+				<input type="checkbox" id="af3">3</input>
+			</div>
+		</div>
+
 		<button id="clear">Clear Local Storage</button>
 
 		<div id="status"></div>
