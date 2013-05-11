@@ -1,5 +1,29 @@
+function af_alert(level, name) {
+	if (localStorage["notify_af" + level] == "true" || false) {
+		var notification = webkitNotifications.createNotification(
+				  'alert.png',
+				  'autofinger level ' + level,
+				  name);
+
+		notification.show();
+	}
+}
+
+var polling_tid = null;
+
+function schedule_poll(poller) {
+	var timeout = "poll_interval" in localStorage ?
+			localStorage["poll_interval"] * 1000 :
+			30000;
+	polling_tid = setTimeout(poller, timeout);
+}
+
 function poll() {
-	$.ajax({"url": "http://grinnellplans.com/quicklove.php",
+	if (localStorage["notify"] != "true")
+		return;
+
+	$.ajax({"url": (localStorage["use_ssl"] == "true" || false ? "https" : "http") 
+			+ "://grinnellplans.com/quicklove.php",
 		"dataType": "html",
 		"success": function(data, text_status, jq) {
 			var $doc = $(data);
@@ -17,13 +41,22 @@ function poll() {
 			});
 			*/
 
-			var af1 = $doc.find(".autoreadlevel.first .planlove");
-			var af2 = $doc.find(".autoreadlevel.odd .planlove");
-			var af3 = $doc.find(".autoreadlevel.last .planlove");
+			$doc.find(".autoreadlevel.first .planlove").each(function(idx, tmp) {
+				af_alert(1, $(this).text());
+			});
+
+			$doc.find(".autoreadlevel.odd .planlove").each(function(idx, tmp) {
+				af_alert(2, $(this).text());
+			});
+
+			$doc.find(".autoreadlevel.last .planlove").each(function(idx, tmp) {
+				af_alert(3, $(this).text());
+			});
+
 		}});
+
+	schedule_poll(poll);
 }
 
-
-setTimeout(function() {
-	//alert("this is a test!");
-}, 1000);
+if (localStorage["notify"] == "true" || false)
+	schedule_poll(poll);

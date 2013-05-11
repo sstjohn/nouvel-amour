@@ -99,6 +99,18 @@ chrome.runtime.onMessage.addListener(
 
 					chrome.storage.local.set(data);
 				});
+				return false;
+			}
+			if (request["type"] == "poll-ctrl") {
+				if (request["action"] == "start")
+					schedule_poll(poll);
+				if (request["action"] == "stop")
+					clearTimeout(polling_tid);
+				if (request["action"] == "reset") {
+					clearTimeout(polling_tid);
+					schedule_poll(poll);
+				}
+				return false;
 			}
 			return false;
 		});

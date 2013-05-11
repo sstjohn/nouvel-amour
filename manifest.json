@@ -6,10 +6,10 @@
 	"permissions": [
 		"http://*.grinnellplans.com/",
 		"https://*.grinnellplans.com/",
+		"notifications",
 		"storage"],
 	"optional_permissions": [
-		"management",
-		"notifications"],
+		"management"],
 	"content_scripts": [{
 		"matches": ["*://*.grinnellplans.com/search*"],
 		"js": ["jquery.min.js", "jquery-ui.min.js", "content_script.js"],
@@ -21,5 +21,6 @@
 		"scripts": ["md5.js", "upgrade.js", "jquery.min.js", "notification.js", "background.js"]
 	},
 	"options_page": "options.html",
-	"content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
+	"content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
+	"web_accessible_resources": ["alert.png"]
 }

@@ -13,10 +13,19 @@ function autodismiss_set() {
 
 function notification_toggle() {
 	$("#notification_settings").slideToggle();
-	if ("true" == localStorage["notify"] || false)
+
+	var message = {};
+	message["type"] = "poll-ctrl";
+
+	if ("true" == localStorage["notify"] || false) {
 		localStorage["notify"] = "false";
-	else
+		message["action"] = "stop";
+	}
+	else {
 		localStorage["notify"] = "true";
+		message["action"] = "start";
+	}
+	chrome.runtime.sendMessage(message);
 }
 
 $(document).ready(function() {
@@ -29,12 +38,20 @@ $(document).ready(function() {
 		$("#notify").prop('checked', true);
 	}
 	$("#notify").change(notification_toggle);
-	$("#poll_interval").val(localStorage["poll_interval"] || 15);
+	$("#poll_interval").val(localStorage["poll_interval"] || 30);
+	$("#poll_interval").change(function() { localStorage["poll_interval"] = $(this).val(); 
+						chrome.runtime.sendMessage({"type": "poll-ctrl",
+									    "action": "reset"});});
 
 	if ("true" == localStorage["use_ssl"] || false)
 		$("#use_ssl").prop('checked', true);
 
 	$("#use_ssl").change(function() {localStorage["use_ssl"] = $(this).is(':checked');});
+
+	if ("true" == localStorage["notify_newlove"] || false)
+		$("#notify_newlove").prop('checked', true);
+
+	$("#notify_newlove").change(function() {localStorage["notify_newlove"] = $(this).is(':checked');});
 
 	if ("true" == localStorage["notify_af1"] || false)
 		$("#af1").prop('checked', true);
