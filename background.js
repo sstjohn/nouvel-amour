@@ -82,12 +82,68 @@ function mark_seen(data, author, love) {
 	return data;
 }
 
+function update_aflist(finger_data) {
+	chrome.storage.local.get("*autofinger", function(data) {
+		var aflist = data["*autofinger"];
+		if (aflist == undefined)
+			aflist = {1: {}, 2: {}, 3: {}};
+		for (var level = 1; level <= 3; level++) {
+			var tmp = {};
+			for (idx in finger_data[level]) {
+				var name = finger_data[level][idx];
+				aflist[level][name] = "N";
+				tmp[name] = "";
+			}
+			var remove_list = [];
+			for (idx in aflist[level]) {
+				if (!(idx in tmp)) {
+					remove_list.push(idx);
+				}
+			}
+			for (idx in remove_list) {
+				delete aflist[level][remove_list[idx]];
+			}
+		}
+		chrome.storage.local.set({"*autofinger": aflist});
+	});
+}
+
+function check_af_fresh(level, name, callback) {
+	chrome.storage.local.get("*autofinger", function(data) {
+		var aflist = data["*autofinger"];
+		if (undefined == aflist) {
+			callback(true);
+			return;
+		}
+		if (!(name in aflist[level])) {
+			callback(true);
+			return;
+		}
+		callback(aflist[level][name].match(/N/) == null);
+	});
+	return true;
+}
+
+function set_af_notified(level, name) {
+	chrome.storage.local.get("*autofinger", function(data) {
+		var aflist = data["*autofinger"];
+		if (undefined == aflist)
+			aflist = {1: {}, 2: {}, 3: {}};
+		aflist[level][name] = "N";
+		chrome.storage.local.set({"*autofinger": aflist});
+	});
+	return false;
+}
 chrome.runtime.onMessage.addListener(
 		function(request, sender, sendResponse) {
 			if (request["type"] == "love-diff") {
 				love_diff(request, sendResponse);
 				return true;
 			}
+			if (request["type"] == "finger-check")
+				return check_af_fresh(request["level"], request["name"], sendResponse);
+			if (request["type"] == "finger-seen")
+				return set_af_notified(request["level"], request["name"]);
 			if (request["type"] == "love-seen") {
 				chrome.storage.local.get(request.user, function(data) {
 					var hash = md5(request["love"]);
@@ -112,5 +168,7 @@ chrome.runtime.onMessage.addListener(
 				}
 				return false;
 			}
+			if (request["type"] == "autofinger-update")
+				update_aflist(request["finger"]);
 			return false;
 		});

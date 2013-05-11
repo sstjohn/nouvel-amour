@@ -1,11 +1,30 @@
-function af_alert(level, name) {
-	if (localStorage["notify_af" + level] == "true" || false) {
-		var notification = webkitNotifications.createNotification(
-				  'alert.png',
-				  'autofinger level ' + level,
-				  name);
+var pending_notifications = {1: {}, 2: {}, 3: {}};
 
-		notification.show();
+function af_alert(level, name) {
+	if (name in pending_notifications[level])
+		return;
+
+	if (localStorage["notify_af" + level] == "true" || false) {
+		check_af_fresh(level, name, function(data) {
+			if (data) {
+				pending_notifications[level][name] = "";
+
+				var notification = webkitNotifications.createNotification(
+				  	'alert.png',
+				  	'autofinger level ' + level,
+				  	name);
+
+				notification.onclose = function() {
+					chrome.runtime.sendMessage(
+						{"type": "finger-seen",
+						 "level": level,
+						 "name": name});
+					delete pending_notifications[level][name];
+				};
+				
+				notification.show();
+			}
+		});
 	}
 }
 
