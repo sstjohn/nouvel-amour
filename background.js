@@ -102,5 +102,3 @@ chrome.runtime.onMessage.addListener(
 			}
 			return false;
 		});
-
-chrome.storage.local.clear();
