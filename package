@@ -1,0 +1,11 @@
+#!/bin/sh
+
+version=`sed -n -e '/version/s~^.*\([0-9][0-9]*\.[0-9]*\.[0-9]*\).*$~\1~p' manifest.json`
+fname=../nouvel-amour_${version}.zip
+
+if [ -f ${fname} ]; then
+	echo "${fname} exists. aborting."
+	exit 1
+fi
+
+zip ${fname} -xi manifest.json *.css *.html *.js
