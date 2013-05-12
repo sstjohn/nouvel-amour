@@ -18,6 +18,15 @@ function upgrade(omaj, omin, orev) {
 }
 
 chrome.runtime.onInstalled.addListener(function(details) {
+	chrome.management.getAll(function(data) {
+		for (idx in data) {
+			var ext = data[idx];
+			if (ext.name == "GrinnellPlans NewLove") {
+				chrome.management.setEnabled(ext.id, false);
+			}
+		}
+	});
+
 	if (details.reason != "update")
 		return;
 
