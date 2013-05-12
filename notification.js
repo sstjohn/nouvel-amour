@@ -25,7 +25,10 @@ function af_alert(level, name) {
 				notification.onclick = function() {
 					chrome.tabs.create({"url": (localStorage["use_ssl"] == "true" || false ? "https" : "http")
 								   + "://grinnellplans.com/read.php?searchname="
-								   + name});
+								   + name}, function(tab) {
+									   chrome.windows.update(tab.windowId,
+										   		{"focused": true});
+								   });
 					notification.close();
 				};
 				
