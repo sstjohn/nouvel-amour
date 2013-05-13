@@ -48,11 +48,11 @@ $(document).ready(function() {
 
 	$("#use_ssl").change(function() {localStorage["use_ssl"] = $(this).is(':checked');});
 
-	if ("true" == localStorage["notify_newlove"] || false)
+	/*if ("true" == localStorage["notify_newlove"] || false)
 		$("#notify_newlove").prop('checked', true);
 
 	$("#notify_newlove").change(function() {localStorage["notify_newlove"] = $(this).is(':checked');});
-
+	*/
 	if ("true" == localStorage["notify_af1"] || false)
 		$("#af1").prop('checked', true);
 	if ("true" == localStorage["notify_af2"] || false)
