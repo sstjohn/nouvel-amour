@@ -17,6 +17,13 @@ function upgrade(omaj, omin, orev) {
 	}
 }
 
+function settings_cleanup() {
+	if ("poll_interval" in localStorage) {
+		if (localStorage["poll_interval"] < 300)
+			localStorage["poll_interval"] = 300;
+	}
+}
+
 chrome.runtime.onInstalled.addListener(function(details) {
 	chrome.management.getAll(function(data) {
 		for (idx in data) {
@@ -28,8 +35,10 @@ chrome.runtime.onInstalled.addListener(function(details) {
 		}
 	});
 
-	if (details.reason != "update")
+	if (details.reason != "update") {
+		chrome.storage.local.clear();
 		return;
+	}
 
 	var oldVersion = details.previousVersion.split(".");
 	var omaj = oldVersion[0];
@@ -37,4 +46,5 @@ chrome.runtime.onInstalled.addListener(function(details) {
 	var orev = oldVersion[2];
 
 	upgrade(omaj, omin, orev);	
+	settings_cleanup();
 });

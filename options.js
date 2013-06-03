@@ -52,10 +52,27 @@ $(document).ready(function() {
 		$("#notify").prop('checked', true);
 	}
 	$("#notify").change(notification_toggle);
-	$("#poll_interval").val(localStorage["poll_interval"] || 30);
-	$("#poll_interval").change(function() { localStorage["poll_interval"] = $(this).val(); 
-						chrome.runtime.sendMessage({"type": "poll-ctrl",
-									    "action": "reset"});});
+	$("#poll_interval").val(localStorage["poll_interval"] || 300);
+	$("#poll_interval").change(function() { 
+		if ($(this).val() < 300) {
+			$("#status").html("Minimum allowed polling interval is 5 minutes (300 seconds).");
+		        setTimeout(function() {
+                		$("#status").html("");
+		        }, 5000);
+			if ("poll_interval" in localStorage) {
+				if (localStorage["poll_interval"] >= 300) {
+					$(this).val(localStorage["poll_interval"]);
+					return;
+				}
+			}
+			localStorage["poll_interval"] = 300;
+			$(this).val(300);
+		} else {
+			localStorage["poll_interval"] = $(this).val(); 
+			chrome.runtime.sendMessage({"type": "poll-ctrl",
+					    "action": "reset"});
+		}
+	});
 
 	if ("true" == localStorage["use_ssl"] || false)
 		$("#use_ssl").prop('checked', true);

@@ -46,7 +46,7 @@ var polling_tid = null;
 function schedule_poll(poller) {
 	var timeout = "poll_interval" in localStorage ?
 			localStorage["poll_interval"] * 1000 :
-			30000;
+			600000;
 	polling_tid = setTimeout(poller, timeout);
 }
 

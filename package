@@ -8,4 +8,4 @@ if [ -f ${fname} ]; then
 	exit 1
 fi
 
-zip ${fname} -xi manifest.json *.css *.html *.js
+zip ${fname} -xi manifest.json *.css *.html *.js *.png
