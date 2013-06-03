@@ -52,7 +52,7 @@ $(document).ready(function() {
 		$("#notify").prop('checked', true);
 	}
 	$("#notify").change(notification_toggle);
-	$("#poll_interval").val(localStorage["poll_interval"] || 300);
+	$("#poll_interval").val(localStorage["poll_interval"] || 1800);
 	$("#poll_interval").change(function() { 
 		if ($(this).val() < 300) {
 			$("#status").html("Minimum allowed polling interval is 5 minutes (300 seconds).");
@@ -77,13 +77,19 @@ $(document).ready(function() {
 	if ("true" == localStorage["use_ssl"] || false)
 		$("#use_ssl").prop('checked', true);
 
-	$("#use_ssl").change(function() {localStorage["use_ssl"] = $(this).is(':checked');});
+	$("#use_ssl").change(function() {
+		localStorage["use_ssl"] = $(this).is(':checked');
+		_gaq.push(['_trackEvent', 'use_ssl', localStorage["use_ssl"]);
+	});
 
-	/*if ("true" == localStorage["notify_newlove"] || false)
+	if ("true" == localStorage["notify_newlove"] || false)
 		$("#notify_newlove").prop('checked', true);
 
-	$("#notify_newlove").change(function() {localStorage["notify_newlove"] = $(this).is(':checked');});
-	*/
+	$("#notify_newlove").change(function() {
+		localStorage["notify_newlove"] = $(this).is(':checked');
+		_gaq.push(['_trackEvent', 'notify_newlove', localStorage["notify_newlove"]);
+	});
+	
 	if ("true" == localStorage["notify_af1"] || false)
 		$("#af1").prop('checked', true);
 	if ("true" == localStorage["notify_af2"] || false)

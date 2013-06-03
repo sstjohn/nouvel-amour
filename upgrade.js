@@ -15,6 +15,10 @@ function upgrade(omaj, omin, orev) {
 			chrome.storage.local.set(data);
 		});
 	}
+	if (omaj <= 3 && omin < 5) {
+		if (localStorage["notify"] || false)
+			localStorage["notify_newlove"] = "true";
+	}
 }
 
 function settings_cleanup() {
@@ -36,7 +40,6 @@ chrome.runtime.onInstalled.addListener(function(details) {
 	});
 
 	if (details.reason != "update") {
-		chrome.storage.local.clear();
 		return;
 	}
 
