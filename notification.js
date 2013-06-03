@@ -15,6 +15,7 @@ function af_alert(level, name) {
 				  	name);
 
 				notification.onclose = function() {
+					_gaq.push(['_trackEvent', 'notification', 'closed']);
 					chrome.runtime.sendMessage(
 						{"type": "finger-seen",
 						 "level": level,
@@ -23,6 +24,7 @@ function af_alert(level, name) {
 				};
 
 				notification.onclick = function() {
+					_gaq.push(['_trackEvent', 'notification', 'clicked']);
 					chrome.tabs.create({"url": (localStorage["use_ssl"] == "true" || false ? "https" : "http")
 								   + "://grinnellplans.com/read.php?searchname="
 								   + name}, function(tab) {
@@ -32,6 +34,7 @@ function af_alert(level, name) {
 					notification.close();
 				};
 				
+				 _gaq.push(['_trackEvent', 'notification', 'shown']);
 				notification.show();
 			}
 		});

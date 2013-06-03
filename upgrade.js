@@ -23,6 +23,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
 			var ext = data[idx];
 			if (ext.name == "GrinnellPlans NewLove") {
 				chrome.management.setEnabled(ext.id, false);
+				_gaq.push(['_trackEvent', 'oldnewlove', 'disabled']);
 			}
 		}
 	});

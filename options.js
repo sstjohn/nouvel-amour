@@ -1,4 +1,15 @@
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-40740194-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+	  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = 'https://ssl.google-analytics.com/ga.js';
+	      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+
 function clear_storage() {
+	_gaq.push(['_trackEvent', 'clear', 'clicked']);
 	chrome.storage.local.clear();
 
 	$("#status").html("Settings cleared.");
@@ -9,6 +20,7 @@ function clear_storage() {
 
 function autodismiss_set() {
 	localStorage["autodismiss"] = $("#autodismiss option:selected").val();
+	_gaq.push(['_trackEvent', 'autodismiss', localStorage["autodismiss"]]);
 }
 
 function notification_toggle() {
@@ -20,10 +32,12 @@ function notification_toggle() {
 	if ("true" == localStorage["notify"] || false) {
 		localStorage["notify"] = "false";
 		message["action"] = "stop";
+		_gaq.push(['_trackEvent', 'notify', 'disabled']);
 	}
 	else {
 		localStorage["notify"] = "true";
 		message["action"] = "start";
+		_gaq.push(['_trackEvent', 'notify', 'enabled']);
 	}
 	chrome.runtime.sendMessage(message);
 }
