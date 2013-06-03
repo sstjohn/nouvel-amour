@@ -40,8 +40,11 @@ chrome.runtime.onInstalled.addListener(function(details) {
 	});
 
 	if (details.reason != "update") {
+		_gaq.push(['_trackEvent', 'installed', details.reason]);
 		return;
 	}
+
+	_gaq.push(['_trackEvent','installed','update from '+ details.previousVersion]);
 
 	var oldVersion = details.previousVersion.split(".");
 	var omaj = oldVersion[0];

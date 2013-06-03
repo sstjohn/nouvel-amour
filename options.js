@@ -79,7 +79,7 @@ $(document).ready(function() {
 
 	$("#use_ssl").change(function() {
 		localStorage["use_ssl"] = $(this).is(':checked');
-		_gaq.push(['_trackEvent', 'use_ssl', localStorage["use_ssl"]);
+		_gaq.push(['_trackEvent', 'use_ssl', localStorage["use_ssl"]]);
 	});
 
 	if ("true" == localStorage["notify_newlove"] || false)
@@ -87,7 +87,7 @@ $(document).ready(function() {
 
 	$("#notify_newlove").change(function() {
 		localStorage["notify_newlove"] = $(this).is(':checked');
-		_gaq.push(['_trackEvent', 'notify_newlove', localStorage["notify_newlove"]);
+		_gaq.push(['_trackEvent', 'notify_newlove', localStorage["notify_newlove"]]);
 	});
 	
 	if ("true" == localStorage["notify_af1"] || false)

@@ -78,6 +78,7 @@ function schedule_poll(poller) {
 }
 
 function poll() {
+	_gaq.push(['_trackEvent', 'notification', 'polled']);
 	if (localStorage["notify"] != "true")
 		return;
 
